@@ -7,6 +7,18 @@
 
 import SwiftUI
 
+struct FlagImage: View {
+    var flagImage: String
+    
+    var body: some View {
+        Image(flagImage).renderingMode(.original)
+            .clipShape(Capsule())
+            .overlay(Capsule().stroke(Color.black, lineWidth: 1))
+            .shadow(color: .black, radius:2)
+            
+    }
+}
+
 struct ContentView: View {
     @State private var countries = ["Estonia", "France","Germany","Ireland","Italy", "Nigeria", "Poland", "Russia", "Spain", "UK", "US"].shuffled()
     @State private var correctAnswer = Int.random(in: 0...3)
@@ -32,16 +44,14 @@ struct ContentView: View {
                     Button(action: {
                         self.flagTapped(number)
                     }) {
-                        Image(self.countries[number]).renderingMode(.original)
-                            .clipShape(Capsule())
-                            .overlay(Capsule().stroke(Color.black, lineWidth: 1))
-                            .shadow(color: .black, radius:2)
+                        FlagImage(flagImage: self.countries[number])
                     }
                 }
                 Text("Score: \(userScore)")
                     .foregroundColor(.white)
                 Spacer()
             }
+//            Go back to project 2 and create a FlagImage() view that renders one flag image using the specific set of modifiers we had.
         }
         .alert(isPresented: $showingScore) {
             Alert(title: Text(scoreTitle), message: Text(""), dismissButton: .default(Text("Continue")){
